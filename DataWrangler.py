@@ -32,6 +32,7 @@ class DataWrangler:
                 self.data.at[index, 'Primary Type'] = 0
             else:
                 self.data.at[index, 'Primary Type'] = 0
+        self.data['Primary Type'] = self.data['Primary Type'].astype(int)
 
     def _parse_date(self):
         self.data['Date'] = pandas.to_datetime(self.data['Date'], format='%m/%d/%Y %I:%M:%S %p')
@@ -48,7 +49,6 @@ class DataWrangler:
                                   "quarter": self.data['Date'].dt.quarter,
                                   })
 
-        self.data['year'] = dates['year']
         self.data['month'] = dates['month']
         self.data['day'] = dates['day']
         self.data['hour'] = dates['hour']
