@@ -29,7 +29,11 @@ if __name__ == '__main__':
     train_data, test_data = dataWrangler.split_data()
 
     svm = SVM(train_data, test_data)
-    svm.train_data('linear')
+    svm.train_and_predict('linear')
+    print("Train error: " + svm.train_error)
+    print("Test error: " + svm.test_error)
+    print("Train log loss: " + svm.train_log_loss)
+    print("Test log loss: " + svm.test_log_loss)
 
 
 
