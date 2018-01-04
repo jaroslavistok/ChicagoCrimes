@@ -1,5 +1,6 @@
 import pandas
-
+from sklearn.model_selection import StratifiedShuffleSplit
+from sklearn.model_selection import train_test_split
 
 class DataWrangler:
     def __init__(self):
@@ -77,11 +78,9 @@ class DataWrangler:
         self.data = self.data.drop(
            attributes_to_drop , axis=1)
 
-        """"
-        ["ID", "COMMUNITY AREA NAME", "Case Number", "Block", "IUCR", "Description", "Location Description",
-         "Updated On", "Location", "X Coordinate", "Y Coordinate", "FBI Code", "Ward", "Year", "District",
-         "Community Area Number"]
-        """
+    def split_data(self):
+        return train_test_split(self.data, test_size=0.3, random_state=42)
+
 
 
 
