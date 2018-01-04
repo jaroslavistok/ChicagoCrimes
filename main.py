@@ -1,8 +1,15 @@
 from DataWrangler import DataWrangler
 
+"""
+42433 training samples (70%)
+18186 test samples (30%)
+
+"""
+
+
 if __name__ == '__main__':
     dataWrangler = DataWrangler()
-    dataWrangler.load_data('crime.csv', 'census_data.csv')
+    dataWrangler.load_data('crimes.csv', 'census_data.csv')
 
     violent_crimes = ['BATTERY', 'ASSAULT', 'OTHER OFFENSE', 'OTHER OFFENSE', 'OFFENSE INVOLVING CHILDREN', 'CRIM SEXUAL ASSAULT',
                  'SEX OFFENSE', 'HOMICIDE', 'KIDNAPPING', 'INTIMIDATION', 'OBSCENITY', 'NON-CRIMINAL']
@@ -19,8 +26,6 @@ if __name__ == '__main__':
     dataWrangler.prepare_data()
     dataWrangler.merge_crime_categories(violent_crimes, non_violent_crimes)
     train_data, test_data = dataWrangler.split_data()
-    print(len(train_data))
-    print(len(test_data))
 
 
 
