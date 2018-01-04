@@ -1,6 +1,7 @@
 import pandas
-from sklearn.model_selection import StratifiedShuffleSplit
+import numpy
 from sklearn.model_selection import train_test_split
+
 
 class DataWrangler:
     def __init__(self):
@@ -81,6 +82,14 @@ class DataWrangler:
     def split_data(self):
         return train_test_split(self.data, test_size=0.3, random_state=42)
 
+    @staticmethod
+    def get_data_and_target(data_set):
+        y = data_set['Primary Type']
+        y = y.to_frame()
+        X = data_set.drop('Primary Type', axis=1)
+        X = numpy.array(X.as_matrix(columns=None))
+        y = numpy.array(y.as_matrix(columns=None)).T[0].astype('int')
+        return X, y
 
 
 
