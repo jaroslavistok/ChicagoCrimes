@@ -1,4 +1,5 @@
 from DataWrangler import DataWrangler
+from SVM import SVM
 
 """
 42433 training samples (70%)
@@ -26,6 +27,11 @@ if __name__ == '__main__':
     dataWrangler.prepare_data()
     dataWrangler.merge_crime_categories(violent_crimes, non_violent_crimes)
     train_data, test_data = dataWrangler.split_data()
+
+    svm = SVM(train_data, test_data)
+    svm.train_data('linear')
+
+
 
 
 
