@@ -1,6 +1,7 @@
 import pandas
 import numpy
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
 
 
 class DataWrangler:
@@ -27,9 +28,9 @@ class DataWrangler:
 
     def merge_crime_categories(self, violent_crimes, non_violent_crimes):
         for index, row in self.data.iterrows():
-            if row['Primary Type'] in violent_crimes:
+            if row['Primary Type'].strip() in violent_crimes:
                 self.data.at[index, 'Primary Type'] = 1
-            elif row['Primary Type'] in non_violent_crimes:
+            elif row['Primary Type'].strip() in non_violent_crimes:
                 self.data.at[index, 'Primary Type'] = 0
             else:
                 self.data.at[index, 'Primary Type'] = 0
@@ -78,6 +79,20 @@ class DataWrangler:
     def drop_irrelevant_attributes(self, attributes_to_drop):
         self.data = self.data.drop(
            attributes_to_drop , axis=1)
+
+    def encode_categories_labels(self):
+        encoder = LabelEncoder()
+        crimeType = self.data['Primary Type']
+        crimeTypeEncoded = encoder.fit_transform(crimeType)
+        self.data['Primary Type'] = crimeTypeEncoded
+
+
+    def encode_non_numerical_values(self, values):
+        for value in values:
+            encoder = LabelEncoder()
+            crimeType = self.data[value]
+            crimeTypeEncoded = encoder.fit_transform(crimeType)
+            self.data[value] = crimeTypeEncoded
 
     def split_data(self):
         return train_test_split(self.data, test_size=0.3, random_state=42)
