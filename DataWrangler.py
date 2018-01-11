@@ -99,6 +99,9 @@ class DataWrangler:
     def split_data(self):
         return train_test_split(self.data, test_size=0.3, random_state=42)
 
+    def pick_samples_and_split_data(self, samples):
+        return train_test_split(self.data.sample(samples), test_size=0.3, random_state=42)
+
     @staticmethod
     def get_data_and_target(data_set):
         y = data_set['Primary Type']
