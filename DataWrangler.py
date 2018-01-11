@@ -1,8 +1,10 @@
 import pandas
 import numpy
+from sklearn.decomposition import PCA
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
-
+from matplotlib import pyplot as plt
+import seaborn as sns
 
 class DataWrangler:
     def __init__(self):
@@ -105,6 +107,36 @@ class DataWrangler:
         X = numpy.array(X.as_matrix(columns=None))
         y = numpy.array(y.as_matrix(columns=None)).T[0].astype('int')
         return X, y
+
+    @staticmethod
+    def reduce_dimension(X):
+        pca = PCA(n_components=2)
+        pca.fit(X)
+        components = pca.transform(X)
+        return components
+
+    @staticmethod
+    def show_heat_map(data_frame):
+        data_frame.columns = ['type', 'arrest', 'domestic', 'beat', 'lat', 'long', 'crowded', 'poverty',
+                              'unemployed', 'no_diploma', '18-64', 'income', 'hardship', 'month', 'day',
+                              'hour', 'dayofyear', 'week', 'weekofyear', 'dayofweek', 'weekday', 'quarter']
+        sns.heatmap(data_frame.corr(), xticklabels=data_frame.corr().columns,
+                    yticklabels=data_frame.corr().columns)
+        # plt.show( bbox_inches='tight')
+        plt.savefig('heatmap.png', bbox_inches='tight')
+
+    @staticmethod
+    def show_histograms(data_frame):
+        data_frame.columns = ['type', 'arrest', 'domestic', 'beat', 'lat', 'long', 'crowded', 'poverty',
+                              'unemployed', 'no_diploma', '18-64', 'income', 'hardship', 'month', 'day',
+                              'hour', 'dayofyear', 'week', 'weekofyear', 'dayofweek', 'weekday', 'quarter']
+
+        data_frame.hist(column=['type', 'arrest', 'domestic', 'beat'])
+        data_frame.hist(column=['lat', 'long', 'crowded', 'poverty'])
+        data_frame.hist(column=['unemployed', 'no_diploma', '18-64', 'income'])
+        data_frame.hist(column=['hardship', 'month', 'day','hour'])
+        data_frame.hist(column=['dayofyear', 'week', 'weekofyear', 'dayofweek'])
+        data_frame.hist(column=['weekday', 'quarter'])
 
 
 

@@ -1,4 +1,6 @@
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import cross_val_score
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
@@ -17,7 +19,7 @@ class LogisticRegressionClassifier:
         self.train_log_loss = None
         self.test_log_loss = None
 
-    def train_and_predict(self, kernel):
+    def train_and_predict(self):
         self.logistic_regression = Pipeline((
             ("scaler", StandardScaler()),
             ("random_forest", LogisticRegression(C=1e5)),
@@ -31,11 +33,11 @@ class LogisticRegressionClassifier:
         X_train, y_train = DataWrangler.get_data_and_target(self.train_data)
         X_test, y_test = DataWrangler.get_data_and_target(self.test_data)
 
-        print(self.logistic_regression.score(X_train, y_train))
-        print(self.logistic_regression.score(X_test, y_test))
+        print(accuracy_score(y_train, self.logistic_regression.predict(X_train)))
+        print(accuracy_score(y_test, self.logistic_regression.predict(X_test)))
 
-        # print(self.logistic_regression.score(X_train, y_train))
-        # print(self.logistic_regression.score(X_test, y_test))
+        print(cross_val_score(self.logistic_regression, X_train, y_train, cv=10))
+        print(cross_val_score(self.logistic_regression, X_test, y_test, cv=10))
 
 
 

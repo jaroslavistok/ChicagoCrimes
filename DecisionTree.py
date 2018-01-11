@@ -1,5 +1,6 @@
 
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, accuracy_score
+from sklearn.model_selection import cross_val_score
 from sklearn.multiclass import OneVsRestClassifier, OneVsOneClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
@@ -19,7 +20,7 @@ class DecisionTree:
         self.train_log_loss = None
         self.test_log_loss = None
 
-    def train_and_predict(self, kernel):
+    def train_and_predict(self):
         # self.decision_tree = Pipeline((
         #     ("scaler", StandardScaler()),
         #     ("random_forest", OneVsOneClassifier(DecisionTreeClassifier(random_state=42))),
@@ -41,11 +42,11 @@ class DecisionTree:
         print(self.decision_tree.score(X_train, y_train))
         print(self.decision_tree.score(X_test, y_test))
 
+        print(accuracy_score(y_train, self.decision_tree.predict(X_train)))
+        print(accuracy_score(y_test, self.decision_tree.predict(X_test)))
 
-        result_test = self.decision_tree.predict(X_test)
-        result_train = self.decision_tree.predict(X_train)
-        print(numpy.array_equiv(result_train, y_train))
-        print(numpy.array_equal(result_test, y_train))
+        print(cross_val_score(self.decision_tree, X_train, y_train, cv=10))
+        print(cross_val_score(self.decision_tree, X_test, y_test, cv=10))
 
 
         # self.train_error = mean_squared_error(y_train, train_result)
