@@ -58,7 +58,7 @@ if __name__ == '__main__':
     dataWrangler.prepare_data()
     dataWrangler.drop_irrelevant_attributes(irrelevant_attributes)
     dataWranglerForMergedData.prepare_data()
-    dataWranglerForMergedData.drop_irrelevant_attributes()
+    dataWranglerForMergedData.drop_irrelevant_attributes(irrelevant_attributes)
 
     dataWranglerForMergedData.merge_crime_categories(violent_crimes, non_violent_crimes)
     dataWrangler.encode_categories_labels()
@@ -102,7 +102,7 @@ if __name__ == '__main__':
     classifier = Classifier(train_data_merged, test_data_merged)
 
     print("mlp")
-    classifier.train_and_predict(MLPClassifier(activation='relu', solver='sgd', hidden_layer_sizes=((50, 50)), alpha=1e-5, random_state=1))
+    classifier.train_and_predict(MLPClassifier(activation='relu', solver='adam', hidden_layer_sizes=((50, 50)), alpha=1e-5, random_state=1))
     classifier.print_results()
 
     print("forest")
